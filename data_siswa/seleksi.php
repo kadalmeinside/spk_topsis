@@ -48,8 +48,9 @@ $bobot5=2;
 $bobot6=2;
 
 
-$n=0;$p1=0;$p2=0;$p3=0;$p4=0;$p5=0;$p6=0;
+$n=0;$la=1;$p1=0;$p2=0;$p3=0;$p4=0;$p5=0;$p6=0;
 while ($r = mysql_fetch_object($q)) {	
+	$nisa[$la]=$r->nis;
 	$s1= exp(2 *log($r->fisika));
 	$p1=$p1+$s1;
 	$s2= exp(2 *log($r->matematika));
@@ -63,6 +64,7 @@ while ($r = mysql_fetch_object($q)) {
 	$s6= exp(2 *log($r->b_indonesia));
 	$p6=$p6+$s6;
 	$n++;
+	$la++;
 	}
 //inisialisasi pembagi	
 $pembagi1=sqrt($p1);
@@ -285,6 +287,9 @@ for ($aa = 1; $aa < $i; $aa++){
 		<td><?php echo "V <sub>$aa</sub"; ?></td><td><?php echo round($v[$aa], 4);?></td>
 	</tr>
 <?php
+}
+for ($ab = 1; $ab < $la; $ab++){
+mysql_query(" UPDATE nilai SET `total`='$v[$ab]' WHERE nis='$nisa[$ab]'")or die(mysql_error());
 }
 ?> 
 </table>
